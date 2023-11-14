@@ -2,6 +2,7 @@ package com.uabc.graficacionordenamientos;
 
 import java.awt.Image;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
@@ -24,7 +25,8 @@ public class Ventana extends javax.swing.JFrame {
     private ImageIcon imagen;
     private Icon icono;
     private boolean arreglosGenerados = false;
-    private int arreglo1[] = new int[5];//ponle 100 al final
+    private boolean archivo = false;
+    private int arreglo1[] = new int[100];
     private int arreglo2[] = new int[500];
     private int arreglo3[] = new int[1000];
     private int arreglo4[] = new int[1500];
@@ -150,19 +152,67 @@ public class Ventana extends javax.swing.JFrame {
     private void OrdenarBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OrdenarBotonActionPerformed
         if (arreglosGenerados) {
 
+            resetCSV();
+
             casoUno(arreglo1, 1);
             casoDos(arreglo1, 1);
             ordenarMayorMenor(arreglo1);
             casoTres(arreglo1, 1);
 
+            casoUno(arreglo2, 2);
+            casoDos(arreglo2, 2);
+            ordenarMayorMenor(arreglo2);
+            casoTres(arreglo2, 2);
+
+            casoUno(arreglo3, 3);
+            casoDos(arreglo3, 3);
+            ordenarMayorMenor(arreglo3);
+            casoTres(arreglo3, 3);
+
+            casoUno(arreglo4, 4);
+            casoDos(arreglo4, 4);
+            ordenarMayorMenor(arreglo4);
+            casoTres(arreglo4, 4);
+
+            casoUno(arreglo5, 5);
+            casoDos(arreglo5, 5);
+            ordenarMayorMenor(arreglo5);
+            casoTres(arreglo5, 5);
+
+            casoUno(arreglo6, 6);
+            casoDos(arreglo6, 6);
+            ordenarMayorMenor(arreglo6);
+            casoTres(arreglo6, 6);
+
+            casoUno(arreglo7, 7);
+            casoDos(arreglo7, 7);
+            ordenarMayorMenor(arreglo7);
+            casoTres(arreglo7, 7);
+
+            casoUno(arreglo8, 8);
+            casoDos(arreglo8, 8);
+            ordenarMayorMenor(arreglo8);
+            casoTres(arreglo8, 8);
+
+            casoUno(arreglo9, 9);
+            casoDos(arreglo9, 9);
+            ordenarMayorMenor(arreglo9);
+            casoTres(arreglo9, 9);
+
+            casoUno(arreglo10, 10);
+            casoDos(arreglo10, 10);
+            ordenarMayorMenor(arreglo10);
+            casoTres(arreglo10, 10);
+
         } else {
             JOptionPane.showMessageDialog(this, "No Se Han Generado Los Arreglos", "Error", JOptionPane.INFORMATION_MESSAGE);
         }
+
     }//GEN-LAST:event_OrdenarBotonActionPerformed
 
     public void casoUno(int[] arreglo, int numArreglo) {
 
-        System.out.println("Caso 1 - Arreglo Desordenado:");
+        System.out.println("Caso 1 Arreglo Desordenado:");
 
         int[] copiaArreglo = generarCopia(arreglo);
 
@@ -184,7 +234,7 @@ public class Ventana extends javax.swing.JFrame {
     }
 
     public void casoDos(int[] arreglo, int numArreglo) {
-        System.out.println("\nCaso 2 - Arreglo Ya Ordenado:");
+        System.out.println("Caso 2 Arreglo Ya Ordenado:");
         System.out.println("Merge Sort:");
         ordenarMergeSort(arreglo, numArreglo, 2);
         System.out.println("Quick Sort:");
@@ -196,7 +246,7 @@ public class Ventana extends javax.swing.JFrame {
     }
 
     public void casoTres(int[] arreglo, int numArreglo) {
-        System.out.println("Caso 3 - Arreglo Desordenado:");
+        System.out.println("Caso 3 Orden Decedente:");
 
         int[] copiaArreglo = generarCopia(arreglo);
 
@@ -317,7 +367,7 @@ public class Ventana extends javax.swing.JFrame {
 
         for (int i = 0; i < arreglo.length; i++) {
 
-            arreglo[i] = numeroAleatorio.nextInt(10);
+            arreglo[i] = numeroAleatorio.nextInt();
 
         }
 
@@ -422,8 +472,40 @@ public class Ventana extends javax.swing.JFrame {
 
     }
 
+    private void resetCSV() {
+        borrarContenidoCSV("mergeSort(caso1).csv");
+        borrarContenidoCSV("mergeSort(caso2).csv");
+        borrarContenidoCSV("mergeSort(caso3).csv");
+        borrarContenidoCSV("Sort(caso1).csv");
+        borrarContenidoCSV("Sort(caso2).csv");
+        borrarContenidoCSV("Sort(caso3).csv");
+        borrarContenidoCSV("QuickSort(caso1).csv");
+        borrarContenidoCSV("QuickSort(caso2).csv");
+        borrarContenidoCSV("QuickSort(caso3).csv");
+        borrarContenidoCSV("ParallelSort(caso1).csv");
+        borrarContenidoCSV("ParallelSort(caso2).csv");
+        borrarContenidoCSV("ParallelSort(caso3).csv");
+    }
+
+    private void borrarContenidoCSV(String nombreArchivo) {
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(nombreArchivo, false))) {
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error al escribir en el archivo: " + e.getMessage());
+        }
+
+    }
+
     private void escribirCSV(String nombreArchivo, int noCorrida, int dimensionArreglo, long tiempo) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(nombreArchivo, true))) {
+            File file = new File(nombreArchivo);
+            if (file.length() == 0) {
+                writer.write("noCorrida,dimensionArreglo,tiempo");
+                writer.newLine();
+
+            }
             String linea = noCorrida + "," + dimensionArreglo + "," + tiempo;
             writer.write(linea);
             writer.newLine();
@@ -431,6 +513,7 @@ public class Ventana extends javax.swing.JFrame {
             e.printStackTrace();
             System.err.println("Error al escribir en el archivo: " + e.getMessage());
         }
+
     }
 
     /**
