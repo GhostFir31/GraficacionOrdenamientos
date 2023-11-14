@@ -1,16 +1,33 @@
 package com.uabc.graficacionordenamientos;
 
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvException;
+import java.awt.BorderLayout;
 import java.awt.Image;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Random;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import java.util.Arrays;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -25,7 +42,6 @@ public class Ventana extends javax.swing.JFrame {
     private ImageIcon imagen;
     private Icon icono;
     private boolean arreglosGenerados = false;
-    private boolean archivo = false;
     private int arreglo1[] = new int[100];
     private int arreglo2[] = new int[500];
     private int arreglo3[] = new int[1000];
@@ -41,7 +57,8 @@ public class Ventana extends javax.swing.JFrame {
 
         initComponents();
         this.setLocationRelativeTo(this);
-        this.setBackground(Background, "C:\\Users\\omar-\\OneDrive\\Documentos\\NetBeansProjects\\GraficacionOrdenamientos\\src\\main\\java\\com\\uabc\\graficacionordenamientos\\assets\\fondo.jpg");
+        //this.setBackground(Background, "C:\\Users\\omar-\\OneDrive\\Documentos\\NetBeansProjects\\GraficacionOrdenamientos\\src\\main\\java\\com\\uabc\\graficacionordenamientos\\assets\\fondo.jpg");
+        this.setBackground(Background, "/home/omarleal/NetBeansProjects/GraficacionOrdenamientos/src/main/java/com/uabc/graficacionordenamientos/assets/fondo.jpg");
     }
 
     private void setBackground(JLabel lbl, String url) {
@@ -66,10 +83,10 @@ public class Ventana extends javax.swing.JFrame {
         generarBoton = new javax.swing.JToggleButton();
         OrdenarBoton = new javax.swing.JToggleButton();
         jLabel1 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jCheckBox3 = new javax.swing.JCheckBox();
-        jCheckBox4 = new javax.swing.JCheckBox();
+        quicksort = new javax.swing.JCheckBox();
+        mergesort = new javax.swing.JCheckBox();
+        sort = new javax.swing.JCheckBox();
+        parallelsort = new javax.swing.JCheckBox();
         Titulo = new javax.swing.JLabel();
         Background = new javax.swing.JLabel();
 
@@ -98,23 +115,43 @@ public class Ventana extends javax.swing.JFrame {
         jLabel1.setText("Mostrar Graficas");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
 
-        jCheckBox1.setText("QuickSort();");
-        jCheckBox1.setContentAreaFilled(false);
-        jPanel1.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, -1, -1));
+        quicksort.setText("QuickSort();");
+        quicksort.setContentAreaFilled(false);
+        quicksort.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                quicksortActionPerformed(evt);
+            }
+        });
+        jPanel1.add(quicksort, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, -1, -1));
 
-        jCheckBox2.setText("MergeSort();");
-        jCheckBox2.setContentAreaFilled(false);
-        jPanel1.add(jCheckBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, -1, -1));
+        mergesort.setText("MergeSort();");
+        mergesort.setContentAreaFilled(false);
+        mergesort.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mergesortActionPerformed(evt);
+            }
+        });
+        jPanel1.add(mergesort, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, -1, -1));
 
-        jCheckBox3.setText("Sort();");
-        jCheckBox3.setContentAreaFilled(false);
-        jPanel1.add(jCheckBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, -1, -1));
+        sort.setText("Sort();");
+        sort.setContentAreaFilled(false);
+        sort.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sortActionPerformed(evt);
+            }
+        });
+        jPanel1.add(sort, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, -1, -1));
 
-        jCheckBox4.setText("ParallelSort();");
-        jCheckBox4.setContentAreaFilled(false);
-        jPanel1.add(jCheckBox4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, -1, -1));
+        parallelsort.setText("ParallelSort();");
+        parallelsort.setContentAreaFilled(false);
+        parallelsort.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                parallelsortActionPerformed(evt);
+            }
+        });
+        jPanel1.add(parallelsort, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, -1, -1));
 
-        Titulo.setIcon(new javax.swing.ImageIcon("C:\\Users\\omar-\\OneDrive\\Documentos\\NetBeansProjects\\GraficacionOrdenamientos\\src\\main\\java\\com\\uabc\\graficacionordenamientos\\assets\\titulo.png")); // NOI18N
+        Titulo.setIcon(new javax.swing.ImageIcon("/home/omarleal/NetBeansProjects/GraficacionOrdenamientos/src/main/java/com/uabc/graficacionordenamientos/assets/titulo.png")); // NOI18N
         jPanel1.add(Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, -1));
         jPanel1.add(Background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 350, 310));
 
@@ -210,23 +247,75 @@ public class Ventana extends javax.swing.JFrame {
 
     }//GEN-LAST:event_OrdenarBotonActionPerformed
 
+    private void quicksortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quicksortActionPerformed
+
+        if (arreglosGenerados) {
+
+            graficarArchivo("QuickSort(caso1).csv", "QuickSort", "Caso 1");
+            graficarArchivo("QuickSort(caso1).csv", "QuickSort", "Caso 2");
+            graficarArchivo("QuickSort(caso1).csv", "QuickSort", "Caso 3");
+            sort.setSelected(false);
+        } else {
+
+            JOptionPane.showMessageDialog(this, "No Se Han Generado Los Arreglos", "Error", JOptionPane.INFORMATION_MESSAGE);
+            quicksort.setSelected(false);
+        }
+    }//GEN-LAST:event_quicksortActionPerformed
+
+    private void mergesortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mergesortActionPerformed
+        if (arreglosGenerados) {
+
+            graficarArchivo("mergeSort(caso1).csv", "MergeSort", "Caso 1");
+            graficarArchivo("mergeSort(caso2).csv", "MergeSort", "Caso 2");
+            graficarArchivo("mergeSort(caso3).csv", "MergeSort", "Caso 3");
+            sort.setSelected(false);
+        } else {
+
+            JOptionPane.showMessageDialog(this, "No Se Han Generado Los Arreglos", "Error", JOptionPane.INFORMATION_MESSAGE);
+            mergesort.setSelected(false);
+        }
+    }//GEN-LAST:event_mergesortActionPerformed
+
+    private void sortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortActionPerformed
+        if (arreglosGenerados) {
+
+            graficarArchivo("Sort(caso1).csv", "Sort", "Caso 1");
+            graficarArchivo("Sort(caso2).csv", "Sort", "Caso 2");
+            graficarArchivo("Sort(caso3).csv", "Sort", "Caso 3");
+            sort.setSelected(false);
+        } else {
+
+            JOptionPane.showMessageDialog(this, "No Se Han Generado Los Arreglos", "Error", JOptionPane.INFORMATION_MESSAGE);
+            sort.setSelected(false);
+        }
+    }//GEN-LAST:event_sortActionPerformed
+
+    private void parallelsortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_parallelsortActionPerformed
+        if (arreglosGenerados) {
+
+            graficarArchivo("ParallelSort(caso1).csv", "ParallelSort", "Caso 1");
+            graficarArchivo("ParallelSort(caso2).csv", "ParallelSort", "Caso 2");
+            graficarArchivo("ParallelSort(caso3).csv", "ParallelSort", "Caso 3");
+            sort.setSelected(false);
+        } else {
+
+            JOptionPane.showMessageDialog(this, "No Se Han Generado Los Arreglos", "Error", JOptionPane.INFORMATION_MESSAGE);
+            parallelsort.setSelected(false);
+        }
+    }//GEN-LAST:event_parallelsortActionPerformed
+
     public void casoUno(int[] arreglo, int numArreglo) {
 
         System.out.println("Caso 1 Arreglo Desordenado:");
-
         int[] copiaArreglo = generarCopia(arreglo);
-
         System.out.println("Merge Sort:");
         ordenarMergeSort(copiaArreglo, numArreglo, 1);
-
         System.out.println("Quick Sort:");
         copiaArreglo = generarCopia(arreglo);
         ordenarQuickSort(copiaArreglo, numArreglo, 1);
-
         System.out.println("Sort:");
         copiaArreglo = generarCopia(arreglo);
         ordenarSort(copiaArreglo, numArreglo, 1);
-
         System.out.println("ParallelSort:");
         copiaArreglo = generarCopia(arreglo);
         ordenarParallelSort(copiaArreglo, numArreglo, 1);
@@ -247,20 +336,15 @@ public class Ventana extends javax.swing.JFrame {
 
     public void casoTres(int[] arreglo, int numArreglo) {
         System.out.println("Caso 3 Orden Decedente:");
-
         int[] copiaArreglo = generarCopia(arreglo);
-
         System.out.println("Merge Sort:");
         ordenarMergeSort(copiaArreglo, numArreglo, 3);
-
         System.out.println("Quick Sort:");
         copiaArreglo = generarCopia(arreglo);
         ordenarQuickSort(copiaArreglo, numArreglo, 3);
-
         System.out.println("Sort:");
         copiaArreglo = generarCopia(arreglo);
         ordenarSort(copiaArreglo, numArreglo, 3);
-
         System.out.println("ParallelSort:");
         copiaArreglo = generarCopia(arreglo);
         ordenarParallelSort(copiaArreglo, numArreglo, 3);
@@ -516,6 +600,56 @@ public class Ventana extends javax.swing.JFrame {
 
     }
 
+    public static void graficarArchivo(String nombreArchivo, String metodo, String caso) {
+        try (CSVReader reader = new CSVReader(new FileReader(nombreArchivo))) {
+
+            List<String[]> data = null;
+            try {
+                data = reader.readAll();
+            } catch (CsvException ex) {
+                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            XYSeries series = new XYSeries("Tiempo vs Dimension de Arreglo: ");
+
+            for (String[] row : data.subList(1, data.size())) {
+                int dimensionArreglo = Integer.parseInt(row[1]);
+                long tiempo = Long.parseLong(row[2]);
+                series.add(dimensionArreglo, tiempo);
+            }
+
+            XYSeriesCollection dataset = new XYSeriesCollection(series);
+
+            JFreeChart chart = ChartFactory.createXYLineChart(
+                    "Tiempo vs Dimension de Arreglo" + " " + metodo + " " + caso,
+                    "Dimension de Arreglo",
+                    "Tiempo(NanoSegundos)",
+                    dataset
+            );
+
+            SwingUtilities.invokeLater(() -> {
+                JFrame frame = new JFrame("Gráfico");
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frame.getContentPane().add(new ChartPanel(chart), BorderLayout.CENTER);
+                frame.setSize(800, 600);
+                frame.setLocationRelativeTo(null);
+
+                frame.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosed(WindowEvent e) {
+
+                        System.out.println("Ventana cerrada");
+                    }
+                });
+
+                frame.setVisible(true);
+            });
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -556,12 +690,12 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JToggleButton OrdenarBoton;
     private javax.swing.JLabel Titulo;
     private javax.swing.JToggleButton generarBoton;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JCheckBox jCheckBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JCheckBox mergesort;
+    private javax.swing.JCheckBox parallelsort;
+    private javax.swing.JCheckBox quicksort;
+    private javax.swing.JCheckBox sort;
     // End of variables declaration//GEN-END:variables
 
 }
