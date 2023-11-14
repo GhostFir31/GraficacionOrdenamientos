@@ -1,10 +1,15 @@
 package com.uabc.graficacionordenamientos;
 
 import java.awt.Image;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Random;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import java.util.Arrays;
+import javax.swing.JOptionPane;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -18,8 +23,17 @@ public class Ventana extends javax.swing.JFrame {
 
     private ImageIcon imagen;
     private Icon icono;
-
-
+    private boolean arreglosGenerados = false;
+    private int arreglo1[] = new int[5];//ponle 100 al final
+    private int arreglo2[] = new int[500];
+    private int arreglo3[] = new int[1000];
+    private int arreglo4[] = new int[1500];
+    private int arreglo5[] = new int[2000];
+    private int arreglo6[] = new int[3000];
+    private int arreglo7[] = new int[4000];
+    private int arreglo8[] = new int[5000];
+    private int arreglo9[] = new int[7000];
+    private int arreglo10[] = new int[10000];
 
     public Ventana() {
 
@@ -72,6 +86,11 @@ public class Ventana extends javax.swing.JFrame {
 
         OrdenarBoton.setText("Ordenar");
         OrdenarBoton.setContentAreaFilled(false);
+        OrdenarBoton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OrdenarBotonActionPerformed(evt);
+            }
+        });
         jPanel1.add(OrdenarBoton, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 270, 180, -1));
 
         jLabel1.setText("Mostrar Graficas");
@@ -112,23 +131,307 @@ public class Ventana extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void generarBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generarBotonActionPerformed
-        
-        Random random = new Random();
-        
-        Integer arreglo1[] = new Integer[100];
-        Integer arreglo2[] = new Integer[500];
-        Integer arreglo3[] = new Integer[1000];
-        Integer arreglo4[] = new Integer[1500];
-        Integer arreglo5[] = new Integer[2000];
-        Integer arreglo6[] = new Integer[3000];
-        Integer arreglo7[] = new Integer[4000];
-        Integer arreglo8[] = new Integer[5000];
-        Integer arreglo9[] = new Integer[7000];
-        Integer arreglo10[] = new Integer[10000];
-        
-        
-        
+
+        rellenarAleatorio(arreglo1);
+        rellenarAleatorio(arreglo2);
+        rellenarAleatorio(arreglo3);
+        rellenarAleatorio(arreglo4);
+        rellenarAleatorio(arreglo5);
+        rellenarAleatorio(arreglo6);
+        rellenarAleatorio(arreglo7);
+        rellenarAleatorio(arreglo8);
+        rellenarAleatorio(arreglo9);
+        rellenarAleatorio(arreglo10);
+
+        this.arreglosGenerados = true;
+        JOptionPane.showMessageDialog(this, "Arreglos Generados Con Exito", "Aviso", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_generarBotonActionPerformed
+
+    private void OrdenarBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OrdenarBotonActionPerformed
+        if (arreglosGenerados) {
+
+            casoUno(arreglo1, 1);
+            casoDos(arreglo1, 1);
+            ordenarMayorMenor(arreglo1);
+            casoTres(arreglo1, 1);
+
+        } else {
+            JOptionPane.showMessageDialog(this, "No Se Han Generado Los Arreglos", "Error", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_OrdenarBotonActionPerformed
+
+    public void casoUno(int[] arreglo, int numArreglo) {
+
+        System.out.println("Caso 1 - Arreglo Desordenado:");
+
+        int[] copiaArreglo = generarCopia(arreglo);
+
+        System.out.println("Merge Sort:");
+        ordenarMergeSort(copiaArreglo, numArreglo, 1);
+
+        System.out.println("Quick Sort:");
+        copiaArreglo = generarCopia(arreglo);
+        ordenarQuickSort(copiaArreglo, numArreglo, 1);
+
+        System.out.println("Sort:");
+        copiaArreglo = generarCopia(arreglo);
+        ordenarSort(copiaArreglo, numArreglo, 1);
+
+        System.out.println("ParallelSort:");
+        copiaArreglo = generarCopia(arreglo);
+        ordenarParallelSort(copiaArreglo, numArreglo, 1);
+
+    }
+
+    public void casoDos(int[] arreglo, int numArreglo) {
+        System.out.println("\nCaso 2 - Arreglo Ya Ordenado:");
+        System.out.println("Merge Sort:");
+        ordenarMergeSort(arreglo, numArreglo, 2);
+        System.out.println("Quick Sort:");
+        ordenarQuickSort(arreglo, numArreglo, 2);
+        System.out.println("Sort:");
+        ordenarSort(arreglo, numArreglo, 2);
+        System.out.println("ParallelSort:");
+        ordenarParallelSort(arreglo, numArreglo, 2);
+    }
+
+    public void casoTres(int[] arreglo, int numArreglo) {
+        System.out.println("Caso 3 - Arreglo Desordenado:");
+
+        int[] copiaArreglo = generarCopia(arreglo);
+
+        System.out.println("Merge Sort:");
+        ordenarMergeSort(copiaArreglo, numArreglo, 3);
+
+        System.out.println("Quick Sort:");
+        copiaArreglo = generarCopia(arreglo);
+        ordenarQuickSort(copiaArreglo, numArreglo, 3);
+
+        System.out.println("Sort:");
+        copiaArreglo = generarCopia(arreglo);
+        ordenarSort(copiaArreglo, numArreglo, 3);
+
+        System.out.println("ParallelSort:");
+        copiaArreglo = generarCopia(arreglo);
+        ordenarParallelSort(copiaArreglo, numArreglo, 3);
+    }
+
+    public void ordenarMayorMenor(int[] arreglo) {
+        int n = arreglo.length;
+
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (arreglo[j] < arreglo[j + 1]) {
+
+                    int temp = arreglo[j];
+                    arreglo[j] = arreglo[j + 1];
+                    arreglo[j + 1] = temp;
+                }
+            }
+        }
+        //mostrarArreglo(arreglo);
+    }
+
+    public void ordenarMergeSort(int[] arreglo, int numArreglo, int caso) {
+
+        int dimension = arreglo.length;
+
+        long starTime = System.nanoTime();
+
+        mergeSort(arreglo);
+
+        long endTime = System.nanoTime();
+
+        long tiempoEjecucion = endTime - starTime;
+
+        System.out.println("Tiempo de Ejecucion es:" + tiempoEjecucion + " nanosegundos");
+
+        escribirCSV("mergeSort(caso" + caso + ").csv", numArreglo, dimension, tiempoEjecucion);
+
+    }
+
+    public void ordenarQuickSort(int[] arreglo, int numArreglo, int caso) {
+
+        int dimension = arreglo.length;
+
+        int n = arreglo.length;
+
+        long starTime = System.nanoTime();
+
+        quickSort(arreglo, 0, n - 1);
+
+        long endTime = System.nanoTime();
+
+        long tiempoEjecucion = endTime - starTime;
+
+        System.out.println("Tiempo de Ejecucion es:" + tiempoEjecucion + " nanosegundos");
+
+        escribirCSV("QuickSort(caso" + caso + ").csv", numArreglo, dimension, tiempoEjecucion);
+    }
+
+    public void ordenarSort(int[] arreglo, int numArreglo, int caso) {
+
+        int dimension = arreglo.length;
+
+        long starTime = System.nanoTime();
+
+        Arrays.sort(arreglo);
+
+        long endTime = System.nanoTime();
+
+        long tiempoEjecucion = endTime - starTime;
+
+        System.out.println("Tiempo de Ejecucion es:" + tiempoEjecucion + " nanosegundos");
+
+        escribirCSV("Sort(caso" + caso + ").csv", numArreglo, dimension, tiempoEjecucion);
+    }
+
+    public void ordenarParallelSort(int[] arreglo, int numArreglo, int caso) {
+
+        int dimension = arreglo.length;
+
+        long starTime = System.nanoTime();
+
+        Arrays.parallelSort(arreglo);
+
+        long endTime = System.nanoTime();
+
+        long tiempoEjecucion = endTime - starTime;
+
+        System.out.println("Tiempo de Ejecucion es:" + tiempoEjecucion + " nanosegundos");
+
+        escribirCSV("ParallelSort(caso" + caso + ").csv", numArreglo, dimension, tiempoEjecucion);
+    }
+
+    public void mostrarArreglo(int[] arreglo) {
+
+        for (int i = 0; i < arreglo.length; i++) {
+            System.out.println("" + arreglo[i]);
+        }
+
+    }
+
+    public void rellenarAleatorio(int[] arreglo) {
+
+        Random numeroAleatorio = new Random();
+
+        for (int i = 0; i < arreglo.length; i++) {
+
+            arreglo[i] = numeroAleatorio.nextInt(10);
+
+        }
+
+    }
+
+    public int[] generarCopia(int[] arreglo) {
+
+        int arregloCopia[] = new int[arreglo.length];
+
+        System.arraycopy(arreglo, 0, arregloCopia, 0, arreglo.length);
+
+        return arregloCopia;
+    }
+
+    static void intercambiar(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+    static int particion(int[] arr, int low, int high) {
+
+        int pivot = arr[high];
+
+        int i = (low - 1);
+
+        for (int j = low; j <= high - 1; j++) {
+
+            if (arr[j] < pivot) {
+
+                i++;
+                intercambiar(arr, i, j);
+            }
+        }
+        intercambiar(arr, i + 1, high);
+        return (i + 1);
+    }
+
+    static void quickSort(int[] arr, int low, int high) {
+        if (low < high) {
+
+            int pi = particion(arr, low, high);
+
+            quickSort(arr, low, pi - 1);
+            quickSort(arr, pi + 1, high);
+        }
+    }
+
+    static void mergeSort(int[] Arreglo) {
+        int longitudArreglo = Arreglo.length;
+
+        if (longitudArreglo < 2) {
+            return;
+        }
+
+        int mitadArreglo = longitudArreglo / 2;
+        int[] mitadIzquierda = new int[mitadArreglo];
+        int[] mitadDerecha = new int[longitudArreglo - mitadArreglo];
+
+        for (int i = 0; i < mitadArreglo; i++) {
+            mitadIzquierda[i] = Arreglo[i];
+        }
+        for (int i = mitadArreglo; i < longitudArreglo; i++) {
+            mitadDerecha[i - mitadArreglo] = Arreglo[i];
+        }
+
+        mergeSort(mitadIzquierda);
+        mergeSort(mitadDerecha);
+
+        merge(Arreglo, mitadIzquierda, mitadDerecha);
+    }
+
+    static void merge(int[] Arreglo, int[] mitadIzquierda, int[] mitadDerecha) {
+
+        int mitadIzquierda_tamano = mitadIzquierda.length;
+        int mitadDerecha_tamano = mitadDerecha.length;
+
+        int indiceIzquierdo = 0, indiceDerecho = 0, indiceFinal = 0;
+
+        while (indiceIzquierdo < mitadIzquierda_tamano && indiceDerecho < mitadDerecha_tamano) {
+            if (mitadIzquierda[indiceIzquierdo] <= mitadDerecha[indiceDerecho]) {
+                Arreglo[indiceFinal] = mitadIzquierda[indiceIzquierdo];
+                indiceIzquierdo++;
+            } else {
+                Arreglo[indiceFinal] = mitadDerecha[indiceDerecho];
+                indiceDerecho++;
+            }
+            indiceFinal++;
+        }
+
+        while (indiceIzquierdo < mitadIzquierda_tamano) {
+            Arreglo[indiceFinal] = mitadIzquierda[indiceIzquierdo];
+            indiceIzquierdo++;
+            indiceFinal++;
+        }
+
+        while (indiceDerecho < mitadDerecha_tamano) {
+            Arreglo[indiceFinal] = mitadDerecha[indiceDerecho];
+            indiceDerecho++;
+            indiceFinal++;
+        }
+
+    }
+
+    private void escribirCSV(String nombreArchivo, int noCorrida, int dimensionArreglo, long tiempo) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(nombreArchivo, true))) {
+            String linea = noCorrida + "," + dimensionArreglo + "," + tiempo;
+            writer.write(linea);
+            writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error al escribir en el archivo: " + e.getMessage());
+        }
+    }
 
     /**
      * @param args the command line arguments
