@@ -254,7 +254,7 @@ public class Ventana extends javax.swing.JFrame {
             graficarArchivo("QuickSort(caso1).csv", "QuickSort", "Caso 1");
             graficarArchivo("QuickSort(caso1).csv", "QuickSort", "Caso 2");
             graficarArchivo("QuickSort(caso1).csv", "QuickSort", "Caso 3");
-            sort.setSelected(false);
+            quicksort.setSelected(false);
         } else {
 
             JOptionPane.showMessageDialog(this, "No Se Han Generado Los Arreglos", "Error", JOptionPane.INFORMATION_MESSAGE);
@@ -268,7 +268,7 @@ public class Ventana extends javax.swing.JFrame {
             graficarArchivo("mergeSort(caso1).csv", "MergeSort", "Caso 1");
             graficarArchivo("mergeSort(caso2).csv", "MergeSort", "Caso 2");
             graficarArchivo("mergeSort(caso3).csv", "MergeSort", "Caso 3");
-            sort.setSelected(false);
+            mergesort.setSelected(false);
         } else {
 
             JOptionPane.showMessageDialog(this, "No Se Han Generado Los Arreglos", "Error", JOptionPane.INFORMATION_MESSAGE);
@@ -296,7 +296,7 @@ public class Ventana extends javax.swing.JFrame {
             graficarArchivo("ParallelSort(caso1).csv", "ParallelSort", "Caso 1");
             graficarArchivo("ParallelSort(caso2).csv", "ParallelSort", "Caso 2");
             graficarArchivo("ParallelSort(caso3).csv", "ParallelSort", "Caso 3");
-            sort.setSelected(false);
+            parallelsort.setSelected(false);
         } else {
 
             JOptionPane.showMessageDialog(this, "No Se Han Generado Los Arreglos", "Error", JOptionPane.INFORMATION_MESSAGE);
@@ -638,7 +638,7 @@ public class Ventana extends javax.swing.JFrame {
                     @Override
                     public void windowClosed(WindowEvent e) {
 
-                        System.out.println("Ventana cerrada");
+                        
                     }
                 });
 
