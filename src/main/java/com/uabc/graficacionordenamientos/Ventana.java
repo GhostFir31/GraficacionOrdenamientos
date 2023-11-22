@@ -42,7 +42,7 @@ public class Ventana extends javax.swing.JFrame {
     private ImageIcon imagen;
     private Icon icono;
     private boolean arreglosGenerados = false;
-    private int arreglo1[] = new int[100];
+    private int arreglo1[] = new int[5]; //100
     private int arreglo2[] = new int[500];
     private int arreglo3[] = new int[1000];
     private int arreglo4[] = new int[1500];
@@ -53,10 +53,13 @@ public class Ventana extends javax.swing.JFrame {
     private int arreglo9[] = new int[7000];
     private int arreglo10[] = new int[10000];
 
+
+
     public Ventana() {
 
         initComponents();
         this.setLocationRelativeTo(this);
+        resetCSV();
         //this.setBackground(Background, "C:\\Users\\omar-\\OneDrive\\Documentos\\NetBeansProjects\\GraficacionOrdenamientos\\src\\main\\java\\com\\uabc\\graficacionordenamientos\\assets\\fondo.jpg");
         this.setBackground(Background, "/home/omarleal/NetBeansProjects/GraficacionOrdenamientos/src/main/java/com/uabc/graficacionordenamientos/assets/fondo.jpg");
     }
@@ -182,8 +185,12 @@ public class Ventana extends javax.swing.JFrame {
             resetCSV();
 
             casoUno(arreglo1, 1);
+           // System.out.println("Arreglo ya ordenado");
+           // mostrarArreglo(arreglo1);
             casoDos(arreglo1, 1);
             ordenarMayorMenor(arreglo1);
+           // System.out.println("arreglo de mayor a menor");
+           // mostrarArreglo(arreglo1);
             casoTres(arreglo1, 1);
 
             casoUno(arreglo2, 2);
@@ -273,51 +280,69 @@ public class Ventana extends javax.swing.JFrame {
     }//GEN-LAST:event_caso3ActionPerformed
 
     public void casoUno(int[] arreglo, int numArreglo) {
-        System.out.println("Arreglo Inicial"+arreglo);
+        // System.out.println("Arreglo Inicial");
+         //mostrarArreglo(arreglo);
         System.out.println("Caso 1 Arreglo Desordenado:");
-        int[] copiaArreglo = generarCopia(arreglo);
+
         System.out.println("Merge Sort:");
-        System.out.println("Arreglo Inicial"+copiaArreglo);
+        int[] copiaArreglo = generarCopia(arreglo);
+       //  System.out.println("Arreglo copia");
+        //  mostrarArreglo(copiaArreglo);
         ordenarMergeSort(copiaArreglo, numArreglo, 1);
         System.out.println("Quick Sort:");
         copiaArreglo = generarCopia(arreglo);
-        System.out.println("Arreglo Inicial"+copiaArreglo);
+       //  System.out.println("Arreglo copia");
+        //  mostrarArreglo(copiaArreglo);
         ordenarQuickSort(copiaArreglo, numArreglo, 1);
         System.out.println("Sort:");
         copiaArreglo = generarCopia(arreglo);
+       //  System.out.println("Arreglo copia");
+       //  mostrarArreglo(copiaArreglo);
         ordenarSort(copiaArreglo, numArreglo, 1);
         System.out.println("ParallelSort:");
-        copiaArreglo = generarCopia(arreglo);
-        ordenarParallelSort(copiaArreglo, numArreglo, 1);
+        
+       //  System.out.println("Arreglo copia");
+     //    mostrarArreglo(copiaArreglo);
+        ordenarParallelSort(arreglo, numArreglo, 1);
 
     }
 
     public void casoDos(int[] arreglo, int numArreglo) {
         System.out.println("Caso 2 Arreglo Ya Ordenado:");
         System.out.println("Merge Sort:");
+        // mostrarArreglo(arreglo);
         ordenarMergeSort(arreglo, numArreglo, 2);
         System.out.println("Quick Sort:");
+        // mostrarArreglo(arreglo);
         ordenarQuickSort(arreglo, numArreglo, 2);
         System.out.println("Sort:");
+        // mostrarArreglo(arreglo);
         ordenarSort(arreglo, numArreglo, 2);
         System.out.println("ParallelSort:");
+        // mostrarArreglo(arreglo);
         ordenarParallelSort(arreglo, numArreglo, 2);
     }
 
     public void casoTres(int[] arreglo, int numArreglo) {
         System.out.println("Caso 3 Orden Decedente:");
-        int[] copiaArreglo = generarCopia(arreglo);
+
         System.out.println("Merge Sort:");
+        int[] copiaArreglo = generarCopia(arreglo);
+        // mostrarArreglo(copiaArreglo);
         ordenarMergeSort(copiaArreglo, numArreglo, 3);
         System.out.println("Quick Sort:");
         copiaArreglo = generarCopia(arreglo);
+        //  mostrarArreglo(copiaArreglo);
         ordenarQuickSort(copiaArreglo, numArreglo, 3);
         System.out.println("Sort:");
         copiaArreglo = generarCopia(arreglo);
+        //  mostrarArreglo(copiaArreglo);
         ordenarSort(copiaArreglo, numArreglo, 3);
         System.out.println("ParallelSort:");
         copiaArreglo = generarCopia(arreglo);
-        ordenarParallelSort(copiaArreglo, numArreglo, 3);
+        //  mostrarArreglo(copiaArreglo);
+        ordenarParallelSort(arreglo, numArreglo, 3);
+        //  mostrarArreglo(arreglo);
     }
 
     public void ordenarMayorMenor(int[] arreglo) {
@@ -416,15 +441,10 @@ public class Ventana extends javax.swing.JFrame {
     }
 
     public void rellenarAleatorio(int[] arreglo) {
-
         Random numeroAleatorio = new Random();
-
         for (int i = 0; i < arreglo.length; i++) {
-
             arreglo[i] = numeroAleatorio.nextInt();
-
         }
-
     }
 
     public int[] generarCopia(int[] arreglo) {
@@ -436,38 +456,36 @@ public class Ventana extends javax.swing.JFrame {
         return arregloCopia;
     }
 
-    static void intercambiar(int[] arr, int i, int j) {
-        int temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
-    }
+    static void quickSort(int A[], int izq, int der) {
+        int pivote = A[izq]; 
+        int i = izq;         
+        int j = der;         
+        int aux;
 
-    static int particion(int[] arr, int low, int high) {
-
-        int pivot = arr[high];
-
-        int i = (low - 1);
-
-        for (int j = low; j <= high - 1; j++) {
-
-            if (arr[j] < pivot) {
-
+        while (i < j) {                                                           
+            while (A[i] <= pivote && i < j) {
                 i++;
-                intercambiar(arr, i, j);
+            }
+            while (A[j] > pivote) {
+                j--;         
+            }
+            if (i < j) {                                            
+                aux = A[i];                     
+                A[i] = A[j];
+                A[j] = aux;
             }
         }
-        intercambiar(arr, i + 1, high);
-        return (i + 1);
-    }
 
-    static void quickSort(int[] arr, int low, int high) {
-        if (low < high) {
+        A[izq] = A[j];                                       
+        A[j] = pivote;      
 
-            int pi = particion(arr, low, high);
-
-            quickSort(arr, low, pi - 1);
-            quickSort(arr, pi + 1, high);
+        if (izq < j - 1) {
+            quickSort(A, izq, j - 1);          
         }
+        if (j + 1 < der) {
+            quickSort(A, j + 1, der);
+        }
+
     }
 
     static void mergeSort(int[] Arreglo) {
@@ -590,7 +608,7 @@ public class Ventana extends javax.swing.JFrame {
 
                 dataset.addSeries(series);
             }
-            
+
             JFreeChart chart = ChartFactory.createXYLineChart(
                     "Tiempo vs Dimension de Arreglo " + caso,
                     "Dimension de Arreglo",
@@ -612,7 +630,7 @@ public class Ventana extends javax.swing.JFrame {
                 frame.addWindowListener(new WindowAdapter() {
                     @Override
                     public void windowClosed(WindowEvent e) {
-                        
+
                     }
                 });
 
