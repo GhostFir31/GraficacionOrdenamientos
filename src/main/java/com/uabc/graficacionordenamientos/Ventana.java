@@ -42,7 +42,7 @@ public class Ventana extends javax.swing.JFrame {
     private ImageIcon imagen;
     private Icon icono;
     private boolean arreglosGenerados = false;
-    private int arreglo1[] = new int[5]; //100
+    private int arreglo1[] = new int[100]; //100
     private int arreglo2[] = new int[500];
     private int arreglo3[] = new int[1000];
     private int arreglo4[] = new int[1500];
@@ -60,8 +60,8 @@ public class Ventana extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(this);
         resetCSV();
-        //this.setBackground(Background, "C:\\Users\\omar-\\OneDrive\\Documentos\\NetBeansProjects\\GraficacionOrdenamientos\\src\\main\\java\\com\\uabc\\graficacionordenamientos\\assets\\fondo.jpg");
-        this.setBackground(Background, "/home/omarleal/NetBeansProjects/GraficacionOrdenamientos/src/main/java/com/uabc/graficacionordenamientos/assets/fondo.jpg");
+        this.setBackground(Background, "C:\\Users\\omar-\\OneDrive\\Documentos\\NetBeansProjects\\GraficacionOrdenamientos\\src\\main\\java\\com\\uabc\\graficacionordenamientos\\assets\\fondo.jpg");
+        //this.setBackground(Background, "/home/omarleal/NetBeansProjects/GraficacionOrdenamientos/src/main/java/com/uabc/graficacionordenamientos/assets/fondo.jpg");
     }
 
     private void setBackground(JLabel lbl, String url) {
@@ -144,7 +144,7 @@ public class Ventana extends javax.swing.JFrame {
         });
         jPanel1.add(caso3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, -1, -1));
 
-        Titulo.setIcon(new javax.swing.ImageIcon("/home/omarleal/NetBeansProjects/GraficacionOrdenamientos/src/main/java/com/uabc/graficacionordenamientos/assets/titulo.png")); // NOI18N
+        Titulo.setIcon(new javax.swing.ImageIcon("C:\\Users\\omar-\\OneDrive\\Documentos\\NetBeansProjects\\GraficacionOrdenamientos\\src\\main\\java\\com\\uabc\\graficacionordenamientos\\assets\\titulo.png")); // NOI18N
         jPanel1.add(Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 10, -1, -1));
         jPanel1.add(Background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 550, 260));
 
